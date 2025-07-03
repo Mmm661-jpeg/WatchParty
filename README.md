@@ -35,7 +35,6 @@ This app enables users to create and join virtual watch parties where video play
 
 - Microservices backend deployed on **Azure Container Apps** for easy scaling and management
 - Frontend hosted as an Azure **Static Web App** or on Azure Container Apps
-- Docker used for environment consistency across development and deployment
 - YARP (Yet Another Reverse Proxy) provides lightweight routing, auth control, and rate limiting
 - Mix of SQL (MSSQL) and NoSQL (MongoDB) databases depending on service needs
 - gRPC streaming used for high-performance sync in SyncService
