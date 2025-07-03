@@ -57,7 +57,7 @@ This app enables users to create and join virtual watch parties where video play
 
 | Feature            | Service          | Notes                              |
 |--------------------|------------------|----------------------------------|
-| User Auth & Profile | `UserService`    | JWT auth, Blazor login UI, user data storage |
+| User Auth & Profile | `UserService`    | Microsoft Identity with JWT auth, Blazor login UI, user data storage |
 | Room Creation/Join  | `RoomService`    | Host/guest logic, room lifecycle  |
 | Video Sync          | `SyncService`    | SignalR hub with Redis backplane; supports gRPC streaming for efficient sync |
 | In-Room Chat       | `ChatService`     | Real-time chat using pub/sub      |
