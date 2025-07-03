@@ -17,7 +17,7 @@ This app enables users to create and join virtual watch parties where video play
 | **UserService** | Handles authentication with JWT, user profiles        | ASP.NET Core, MSSQL  |
 | **RoomService** | Creates and manages watch rooms, hosts/guests logic   | ASP.NET Core, MongoDB|
 | **SyncService** | Keeps video playback synchronized using SignalR or gRPC streaming | ASP.NET Core |
-| **ChatService** | Real-time in-room chat using pub/sub                   | ASP.NET Core, MongoDB|
+| **ChatService** | Real-time in-room chat                  | ASP.NET Core, MongoDB|
 | **VideoService** | Proxy or integration with YouTube/Twitch APIs          | ASP.NET Core, MongoDB|
 | **ApiGateway**  | YARP-based reverse proxy handling routing and rate limiting | ASP.NET Core, YARP  |
 
