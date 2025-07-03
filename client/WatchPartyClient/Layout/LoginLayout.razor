@@ -1,0 +1,63 @@
+﻿@inherits LayoutComponentBase
+
+
+<div class="top-row px-4 header-bar">
+    <a href="/">Home</a>
+   @*  <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a> *@
+</div>
+
+<div class="login-layout">
+    <article class="auth-content">
+        @Body
+    </article>
+</div>
+
+<style>
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+    .header-bar {
+        background-color: #333;
+        color: white;
+        padding: 0.5rem 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .header-bar a {
+            color: white;
+            margin-right: 1rem;
+            text-decoration: none;
+            font-size: x-large
+        }
+
+            .header-bar a:hover {
+                text-decoration: underline;
+            }
+
+    .login-layout {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 50px); /* leave space for header */
+        background: #0000007a;
+    }
+
+    .auth-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        background: #ffffff78;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+    }
+</style>

@@ -1,0 +1,60 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "SharedProtos";
+
+import "google/protobuf/timestamp.proto";
+
+
+package chat;
+
+service ChatService {
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse); //addChat
+  rpc ReceiveMessages(ReceiveMessagesRequest) returns (stream ChatMessage); //getChatByRoomId
+  rpc GetChatHistory(GetChatHistoryRequest) returns (GetChatHistoryResponse); //getChatByUserId
+  rpc GetChatById(GetChatByIdRequest) returns (ChatMessage); //getChatById
+  rpc GetUserIdFromChat(GetChatByIdRequest) returns (GetUserIdFromChatResponse); //getUserIdFromChat
+}
+
+message SendMessageRequest {
+  string room_id = 1;
+  string user_id = 2;
+  string username = 3;
+  string message = 4;
+}
+
+message SendMessageResponse {
+  bool success = 1;
+  string message = 2;
+ 
+}
+
+message ReceiveMessagesRequest {
+  string room_id = 1;
+}
+
+
+message GetChatHistoryRequest {
+  string user_id = 1;
+}
+
+message GetChatHistoryResponse {
+  repeated ChatMessage messages = 1;
+}
+
+message GetChatByIdRequest {
+  string chat_id = 1; // Unique identifier for the chat message
+}
+
+message GetUserIdFromChatResponse {
+  string user_id = 1; // User ID associated with the chat message
+}
+
+message ChatMessage {
+  string id = 1; // Unique identifier for the message
+  string room_id = 2;
+  string user_id = 3;
+  string username = 4;
+  string message = 5;
+  int64 timestamp = 6; // Unix timestamp in milliseconds
+}
+

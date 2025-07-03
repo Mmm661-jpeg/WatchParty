@@ -1,0 +1,433 @@
+﻿@page "/account"
+@inject HttpClient Http
+@inject IJSRuntime JS
+@inject IConfiguration Config
+@inject NavigationManager Nav
+
+@using System.ComponentModel.DataAnnotations
+@using WatchPartyClient.Models
+@using WatchPartyClient.Utilities
+
+<h1 class="account-header">Your Account</h1>
+
+@if (!IsAuthenticated)
+{
+    <div class="auth-redirect">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>Redirecting to login...</span>
+    </div>
+}
+else if (User is null || Rooms is null)
+{
+    <div class="loading-container">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>Loading your data...</span>
+    </div>
+}
+else
+{
+    <div class="account-container">
+        @if (!string.IsNullOrEmpty(DeleteErrorMessage))
+        {
+            <div class="alert alert-error">
+                <i class="fas fa-exclamation-circle"></i>
+                @DeleteErrorMessage
+            </div>
+        }
+
+        <div class="profile-card">
+            <div class="profile-header">
+                <i class="fas fa-user-circle profile-icon"></i>
+                <div class="profile-info">
+                    <h2>@User.Username</h2>
+                    <p class="profile-email">@User.Email</p>
+                </div>
+            </div>
+            <button class="delete-account-btn" @onclick="DeleteAccount">
+                <i class="fas fa-trash-alt"></i> Delete Account
+            </button>
+        </div>
+
+        <div class="rooms-section">
+            <div class="section-header">
+                <h3><i class="fas fa-video"></i> Your Rooms</h3>
+                @if (Rooms.Count > 0)
+                {
+                    <span class="room-count">@Rooms.Count room(s)</span>
+                }
+            </div>
+
+            @if (Rooms.Count == 0)
+            {
+                <div class="empty-state">
+                    <i class="fas fa-video-slash"></i>
+                    <p>You don't have any rooms yet</p>
+                    <p class="small">Create your first room below</p>
+                </div>
+            }
+            else
+            {
+                <div class="rooms-grid">
+                    @foreach (var room in Rooms)
+                    {
+                        <div class="room-card">
+                            <div class="room-card-header">
+                                <h4>@room.RoomName</h4>
+                                <span class="room-id">ID: @room.RoomId</span>
+                            </div>
+
+                            <div class="room-card-actions">
+                                <button class="delete-room-btn" @onclick="() => DeleteRoom(room.RoomId)">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+
+                                @if (room.IsPrivate)
+                                {
+                                    <button class="show-code-btn" @onclick="() => ToggleFetchRoomCode(room.RoomId)">
+                                        @if (DisplayedRoomId == room.RoomId && IsLoadingCode)
+                                        {
+                                            <i class="fas fa-spinner fa-spin"></i>
+                                            <span>Loading...</span>
+                                        }
+                                        else if (DisplayedRoomId == room.RoomId)
+                                        {
+                                            <i class="fas fa-eye-slash"></i>
+                                            <span>Hide Code</span>
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-eye"></i>
+                                            <span>Show Code</span>
+                                        }
+                                    </button>
+                                }
+                            </div>
+
+                            @if (DisplayedRoomId == room.RoomId && DisplayedRoomCode != null)
+                            {
+                                <div class="room-code-container">
+                                    <label>Room Code:</label>
+                                    <div class="room-code">
+                                        @DisplayedRoomCode
+                                        <button class="copy-code-btn" @onclick="() => CopyToClipboard(DisplayedRoomCode)">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (DisplayedRoomId == room.RoomId && !string.IsNullOrEmpty(CodeErrorMessage))
+                            {
+                                <div class="code-error">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    @CodeErrorMessage
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+
+            <div class="create-room-section">
+                <h3><i class="fas fa-plus-circle"></i> Create New Room</h3>
+
+                <div class="form-group">
+                    <label>Room Name</label>
+                    <input class="form-input" placeholder="Enter room name" @bind="NewRoomName" />
+                </div>
+
+                <div class="form-group">
+                    <label>Max Occupancy</label>
+                    <input type="number" class="form-input" placeholder="10" @bind="NewRoomMax" />
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" @bind="NewRoomIsPrivate" />
+                    <label class="form-check-label">Private Room</label>
+                </div>
+
+                <button class="create-room-btn" @onclick="CreateRoom">
+                    <i class="fas fa-plus"></i> Create Room
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(NotificationMessage))
+    {
+        <div class="notification @NotificationClass">
+            <i class="@GetNotificationIcon()"></i>
+            @NotificationMessage
+        </div>
+    }
+}
+
+@code {
+    private bool IsAuthenticated = false;
+    private string? UserId;
+    private UserDto? User;
+    private List<RoomDto>? Rooms;
+    private string? NotificationMessage;
+    private string? NotificationClass;
+    private string? DeleteErrorMessage;
+
+    private string NewRoomName = "";
+    private int NewRoomMax = 10;
+    private bool NewRoomIsPrivate = false;
+
+    private string? DisplayedRoomId = null;  
+
+    private string? DisplayedRoomCode = null; 
+    private bool IsLoadingCode = false;
+    private string? CodeErrorMessage = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await JS.InvokeAsync<string>("localStorage.getItem", "authToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            Nav.NavigateTo("/login", forceLoad: true);
+            return;
+        }
+
+        var isAnon = JwtParser.IsAnon(token);
+        var uid = JwtParser.GetUserId(token);
+
+        if (isAnon || string.IsNullOrEmpty(uid))
+        {
+            Nav.NavigateTo("/login", forceLoad: true);
+            return;
+        }
+
+        IsAuthenticated = true;
+        UserId = uid;
+
+        string baseUrl = Config["applicationUrl"] ?? throw new ArgumentException("Missing app URL");
+
+        await LoadUser(baseUrl, UserId);
+        await LoadRooms(baseUrl, UserId);
+    }
+
+    private async Task LoadUser(string baseUrl, string userId)
+    {
+        var res = await Http.GetFromJsonAsync<OperationResult<UserDto>>($"{baseUrl}api/user/getUserById/{userId}");
+        if (res?.IsSuccess == true)
+            User = res.Data;
+    }
+
+    private async Task LoadRooms(string baseUrl, string userId)
+    {
+        var res = await Http.GetFromJsonAsync<OperationResult<List<RoomDto>>>($"{baseUrl}api/sync/rooms/getRoomsByHost/{userId}");
+        if (res?.IsSuccess == true && res.Data != null)
+        {
+            Rooms = res.Data;
+            StateHasChanged();
+        }
+
+        else
+        {
+            Rooms = new List<RoomDto>();
+        }
+       
+    }
+
+    private async Task DeleteRoom(string roomId)
+    {
+        string baseUrl = Config["applicationUrl"]!;
+
+        // Get the token from local storage
+        var token = await JS.InvokeAsync<string>("localStorage.getItem", "authToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            NotificationMessage = "Not authenticated.";
+            NotificationClass = "alert alert-danger";
+            return;
+        }
+
+        // Create the HTTP DELETE request manually to add Authorization header
+        var request = new HttpRequestMessage(HttpMethod.Delete, $"{baseUrl}api/sync/rooms/{roomId}");
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        var response = await Http.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var room = Rooms.FirstOrDefault(r => r.RoomId == roomId);
+            if (room != null)
+            {
+                Rooms.Remove(room);
+                NotificationMessage = "Room deleted successfully.";
+                NotificationClass = "alert alert-success";
+                StateHasChanged();
+            }
+        }
+        else
+        {
+            NotificationMessage = $"Failed to delete room: {response.StatusCode}";
+            NotificationClass = "alert alert-danger";
+        }
+    }
+
+    private async Task CreateRoom()
+    {
+        NotificationMessage = null; // reset any old message
+
+        if (string.IsNullOrWhiteSpace(NewRoomName))
+        {
+            NotificationMessage = "Room name cannot be empty.";
+            NotificationClass = "alert alert-warning";
+            return;
+        }
+
+        var baseUrl = Config["applicationUrl"]!;
+        var payload = new CreateRoom_Req
+            {
+                RoomName = NewRoomName.Trim(),
+                MaxOccupancy = NewRoomMax,
+                IsPrivate = NewRoomIsPrivate,
+                HostId = UserId
+            };
+
+        var token = await JS.InvokeAsync<string>("localStorage.getItem", "authToken");
+
+        if (string.IsNullOrEmpty(token))
+        {
+            NotificationMessage = "Not authenticated.";
+            NotificationClass = "alert alert-danger";
+            return;
+        }
+
+      
+
+        var request = new HttpRequestMessage(HttpMethod.Post, $"{baseUrl}api/sync/rooms/createRoom");
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        request.Content = JsonContent.Create(payload);
+
+        var response = await Http.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<OperationResult<RoomDto>>();
+            if (result?.IsSuccess == true && result.Data != null)
+            {
+                Rooms.Add(result.Data);
+
+                NewRoomName = "";
+                NewRoomMax = 10;
+                NewRoomIsPrivate = false;
+
+                NotificationMessage = "Room created successfully!";
+                NotificationClass = "alert alert-success";
+            }
+            else
+            {
+                NotificationMessage = result?.Message ?? "Failed to create room.";
+                NotificationClass = "alert alert-danger";
+            }
+        }
+        else
+        {
+            NotificationMessage = $"Server error: {response.StatusCode}";
+            NotificationClass = "alert alert-danger";
+        }
+    }
+
+    private async Task DeleteAccount()
+    {
+        DeleteErrorMessage = null;
+
+        string baseUrl = Config["applicationUrl"]!;
+        var response = await Http.DeleteAsync($"{baseUrl}api/user/delete/{UserId}"); // Adjust endpoint
+
+        if (!response.IsSuccessStatusCode)
+        {
+            DeleteErrorMessage = "Failed to delete account. Please try again later.";
+            return;
+        }
+
+        await JS.InvokeVoidAsync("localStorage.removeItem", "jwtToken");
+        Nav.NavigateTo("/login", forceLoad: true);
+    }
+
+    private async Task ToggleFetchRoomCode(string roomId)
+    {
+        // If already displayed, hide it
+        if (DisplayedRoomId == roomId)
+        {
+            DisplayedRoomId = null;
+            DisplayedRoomCode = null;
+            CodeErrorMessage = null;
+            StateHasChanged();
+            return;
+        }
+
+        // Otherwise, fetch the code
+        DisplayedRoomId = roomId;
+        DisplayedRoomCode = null;
+        CodeErrorMessage = null;
+        IsLoadingCode = true;
+        StateHasChanged();
+
+        try
+        {
+            var token = await JS.InvokeAsync<string>("localStorage.getItem", "authToken");
+            if (string.IsNullOrEmpty(token))
+            {
+                CodeErrorMessage = "Not authenticated.";
+                return;
+            }
+
+            string baseUrl = Config["applicationUrl"]!;
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{baseUrl}api/sync/rooms/getAccessCode/{roomId}/{UserId}");
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var response = await Http.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<OperationResult<string>>();
+                if (result?.IsSuccess == true && !string.IsNullOrEmpty(result.Data))
+                {
+                    DisplayedRoomCode = result.Data;
+                }
+                else
+                {
+                    CodeErrorMessage = result?.Message ?? "Failed to retrieve room code.";
+                }
+            }
+            else
+            {
+                CodeErrorMessage = $"Error: {response.StatusCode}";
+            }
+        }
+        catch (Exception ex)
+        {
+            CodeErrorMessage = $"Exception: {ex.Message}";
+        }
+        finally
+        {
+            IsLoadingCode = false;
+            StateHasChanged();
+        }
+
+       
+    }
+
+
+    private async Task CopyToClipboard(string text)
+    {
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", text);
+    }
+
+    private string GetNotificationIcon()
+    {
+        return NotificationClass switch
+        {
+            "alert-success" => "fas fa-check-circle",
+            "alert-danger" => "fas fa-exclamation-circle",
+            "alert-warning" => "fas fa-exclamation-triangle",
+            _ => "fas fa-info-circle"
+        };
+    }
+}
+

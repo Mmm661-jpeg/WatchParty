@@ -1,0 +1,250 @@
+﻿@page "/join-room/{RoomId}"
+@using WatchPartyClient.Models
+@using WatchPartyClient.Services
+@using WatchPartyClient.Utilities
+@using System.Text.RegularExpressions
+
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+@inject RoomServices RoomService
+
+<PageTitle>Join Room</PageTitle>
+
+@if (_isLoading)
+{
+    <div class="loading-screen">
+        <div class="spinner"></div>
+        <p>Loading room information...</p>
+    </div>
+}
+else if (_roomNotFound)
+{
+    <div class="error-screen">
+        <div class="error-card">
+            <h3>Room Not Found</h3>
+            <p>The requested room does not exist or may have been deleted.</p>
+            <button @onclick="ReturnHome" class="primary-button">Return Home</button>
+        </div>
+    </div>
+}
+else if (_isRoomPrivate && !_accessCodeVerified && !_isHost)
+{
+    <div class="access-screen">
+        <div class="access-card">
+            <h3>🔒 Private Room</h3>
+            <div class="access-form">
+                <p>This room requires an access code</p>
+                <input type="password" @bind="_accessCode" placeholder="Enter access code" class="form-input" />
+                <button @onclick="VerifyAccessCode" class="primary-button">Submit</button>
+                @if (!string.IsNullOrEmpty(_accessCodeError))
+                {
+                    <div class="error-message">@_accessCodeError</div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else if ((_accessCodeVerified && string.IsNullOrEmpty(_token)) ||
+        (_accessCodeVerified && _isAnonUser && JwtParser.GetRoomId(_token) != RoomId))
+{
+    <div class="username-screen">
+        <div class="username-card">
+            <h3>Choose a Display Name</h3>
+            <div class="username-form">
+                <input type="text" @bind="_username" placeholder="Your username" maxlength="20" class="form-input" />
+                <button @onclick="RegisterAnonUser" class="primary-button">Join Room</button>
+                @if (!string.IsNullOrEmpty(_usernameError))
+                {
+                    <div class="error-message">@_usernameError</div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else if (!string.IsNullOrEmpty(_errorMessage))
+{
+    <div class="error-screen">
+        <div class="error-card">
+            <h3>Error Joining Room</h3>
+            <p>@_errorMessage</p>
+            <button @onclick="ReturnHome" class="primary-button">Return Home</button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string RoomId { get; set; }
+
+    private bool _isLoading = true;
+    private bool _roomNotFound = false;
+    private bool _isHost = false;
+    private bool _isRoomPrivate = false;
+    private bool _accessCodeVerified = false;
+    private string _errorMessage = string.Empty;
+    private string _accessCode = string.Empty;
+    private string _accessCodeError = string.Empty;
+    private string _username = string.Empty;
+    private string _usernameError = string.Empty;
+    private string _token = string.Empty;
+    private bool _isUser = false;
+    private bool _isAnonUser = false;
+    private RoomDto _room;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Get token from local storage
+            _token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
+
+            // Load room information
+            _room = await RoomService.GetRoomInfoAsync(RoomId);
+
+            if (_room == null)
+            {
+                _roomNotFound = true;
+                _isLoading = false;
+                return;
+            }
+
+            _isRoomPrivate = _room.IsPrivate;
+
+            // Check if user is host
+            if (!string.IsNullOrEmpty(_token))
+            {
+                _isHost = await RoomService.IsOwner(_room.HostId, _token);
+            }
+
+            // If host or public room, navigate directly to room
+            if (_isHost || !_isRoomPrivate)
+            {
+                Navigation.NavigateTo($"/room/{RoomId}");
+                return;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"An error occurred: {ex.Message}";
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task VerifyAccessCode()
+    {
+        _accessCodeError = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(_accessCode))
+        {
+            _accessCodeError = "Please enter an access code";
+            return;
+        }
+
+        try
+        {
+            var isValid = await RoomService.VerifyRoomAccessCodeAsync(RoomId, _accessCode);
+            if (!isValid)
+            {
+                _accessCodeError = "Invalid access code";
+                return;
+            }
+
+            _accessCodeVerified = true;
+            _accessCodeError = string.Empty;
+
+            // Check token status
+            if (string.IsNullOrEmpty(_token) || JwtParser.IsTokenExpired(_token))
+            {
+                // No valid token - will show username form
+                return;
+            }
+
+            _isUser = JwtParser.IsUser(_token);
+            _isAnonUser = JwtParser.IsAnon(_token);
+
+            if (_isUser)
+            {
+                // Regular user with valid token - grant access
+                Navigation.NavigateTo($"/room/{RoomId}");
+                return;
+            }
+
+            if (_isAnonUser)
+            {
+                // Anonymous user - check room match
+                if (JwtParser.GetRoomId(_token) == RoomId)
+                {
+                    Navigation.NavigateTo($"/room/{RoomId}");
+                }
+                else
+                {
+                    // Token is for different room - clear it so they can get new one
+                    await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "authToken");
+                    _token = string.Empty;
+                    // Will show username form
+                }
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            _accessCodeError = $"Error verifying access code: {ex.Message}";
+        }
+    }
+
+
+
+    private async Task RegisterAnonUser()
+    {
+        _usernameError = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(_username))
+        {
+            _usernameError = "Please enter a username";
+            return;
+        }
+
+        if (_username.Length < 3 || _username.Length > 20)
+        {
+            _usernameError = "Username must be between 3 and 20 characters";
+            return;
+        }
+
+        if (!Regex.IsMatch(_username, @"^[a-zA-Z0-9_]+$"))
+        {
+            _usernameError = "Username can only contain letters, numbers, and underscores";
+            return;
+        }
+
+        try
+        {
+            // Register anonymous user and get token
+            _token = await RoomService.RegisterAnonUser(RoomId, _username);
+
+            if (string.IsNullOrEmpty(_token))
+            {
+                _usernameError = "Failed to register user";
+                return;
+            }
+
+            // Store token in local storage
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", _token);
+
+            // Navigate to room
+            Navigation.NavigateTo($"/room/{RoomId}");
+        }
+        catch (Exception ex)
+        {
+            _usernameError = $"Error registering user: {ex.Message}";
+        }
+    }
+
+    private void ReturnHome()
+    {
+        Navigation.NavigateTo("/");
+    }
+}

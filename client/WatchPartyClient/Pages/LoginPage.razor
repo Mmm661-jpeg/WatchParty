@@ -1,0 +1,226 @@
+﻿@page "/login"
+@layout LoginLayout
+@using System.ComponentModel.DataAnnotations
+@using WatchPartyClient.Models
+@using Microsoft.Extensions.Configuration
+@inject IJSRuntime JS
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject IConfiguration Configuration
+
+@if (!isRegistering)
+{
+    <h3>Login</h3>
+
+    @if (!string.IsNullOrEmpty(loginResult.Message))
+    {
+        <div class="text-center @(loginResult.IsSuccess ? "text-success" : "text-danger")">
+            @loginResult.Message
+        </div>
+    }
+
+    <EditForm Model="loginReq" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <ValidationMessage For="@(() => loginReq.Username)" />
+        <input placeholder="Username"
+               @bind="loginReq.Username"
+               class="form-control mb-2 @(loginFailed ? "is-invalid" : "")"
+               @oninput="() => loginFailed = false" />
+
+        <ValidationMessage For="@(() => loginReq.Password)" />
+        <input placeholder="Password"
+               type="password"
+               @bind="loginReq.Password"
+               class="form-control mb-2 @(loginFailed ? "is-invalid" : "")"
+               @oninput="() => loginFailed = false" />
+
+        <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
+    </EditForm>
+
+    <p class="text-center">
+        <a href="#" @onclick="ToggleMode" @onclick:preventDefault>Don't have an account? Register</a>
+    </p>
+}
+else
+{
+    <h3>Register</h3>
+
+    @if (!string.IsNullOrEmpty(registerResult.Message))
+    {
+        <div class="text-center @(registerResult.Data ? "text-success" : "text-danger")">
+            @registerResult.Message
+        </div>
+    }
+
+    <EditForm Model="registerReq" OnValidSubmit="HandleRegister">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <ValidationMessage For="@(() => registerReq.Username)" />
+        <input placeholder="Username" @bind="registerReq.Username" class="form-control mb-2" />
+
+        <ValidationMessage For="@(() => registerReq.Email)" />
+        <input placeholder="Email" @bind="registerReq.Email" class="form-control mb-2" />
+
+        <ValidationMessage For="@(() => registerReq.Password)" />
+        <input placeholder="Password" type="password" @bind="registerReq.Password" class="form-control mb-2" />
+
+        <ValidationMessage For="@(() => registerReq.ConfirmPassword)" />
+        <input placeholder="Confirm Password" type="password" @bind="registerReq.ConfirmPassword" class="form-control mb-2" />
+
+        <button type="submit" class="btn btn-success w-100 mb-2">Register</button>
+    </EditForm>
+
+    <p class="text-center">
+        <a href="#" @onclick="ToggleMode" @onclick:preventDefault>Already have an account? Login</a>
+    </p>
+}
+
+@code {
+    private RegisterRequest registerReq = new();
+    private LoginRequest loginReq = new();
+    private OperationResult<string> loginResult = new();
+    private OperationResult<bool> registerResult = new();
+    private bool isRegistering = false;
+    private bool loginFailed = false;
+
+    private async Task HandleLogin()
+    {
+        loginFailed = false;
+        loginResult = new OperationResult<string>();
+
+        var success = await CallLoginApiResult(loginReq);
+
+        if (success && loginResult.IsSuccess && loginResult.Data is not null)
+        {
+            await JS.InvokeVoidAsync("localStorage.setItem", "authToken", loginResult.Data);
+            NavigationManager.NavigateTo("/", forceLoad: true); 
+        }
+        else
+        {
+            loginFailed = true;
+            if (string.IsNullOrEmpty(loginResult.Message))
+            {
+                loginResult = loginResult with { Message = "Login failed. Please check your credentials." };
+            }
+        }
+    }
+
+    private async Task HandleRegister()
+    {
+        var success = await CallRegisterApiResult(registerReq);
+
+        if (!success && string.IsNullOrEmpty(registerResult.Message))
+        {
+            registerResult = new OperationResult<bool>
+                {
+                    IsSuccess = false,
+                    Message = "Registration failed. Please try again."
+                };
+        }
+        else if (success)
+        {
+            isRegistering = false;
+            ClearForm();
+        }
+    }
+
+    private void ToggleMode()
+    {
+        isRegistering = !isRegistering;
+        ClearForm();
+    }
+
+    private void ClearForm()
+    {
+        registerReq = new();
+        loginReq = new();
+        loginResult = new();
+        registerResult = new();
+        loginFailed = false;
+    }
+
+    private async Task<bool> CallLoginApiResult(LoginRequest req)
+    {
+        string apiBaseUrl = Configuration["applicationUrl"];
+        if (string.IsNullOrEmpty(apiBaseUrl))
+        {
+            loginResult = new OperationResult<string>
+                {
+                    IsSuccess = false,
+                    Message = "User API base URL is not configured."
+                };
+            return false;
+        }
+
+        var response = await Http.PostAsJsonAsync($"{apiBaseUrl}api/user/login", req);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            loginResult = new OperationResult<string>
+                {
+                    IsSuccess = false,
+                    Message = $"Server error: {response.StatusCode} - {response.ReasonPhrase}"
+                };
+            return false;
+        }
+
+        var result = await response.Content.ReadFromJsonAsync<OperationResult<string>>();
+
+        if (result != null)
+        {
+            loginResult = result;
+            return loginResult.IsSuccess;
+        }
+
+        loginResult = new OperationResult<string>
+            {
+                IsSuccess = false,
+                Message = "Unexpected response from server."
+            };
+        return false;
+    }
+
+    private async Task<bool> CallRegisterApiResult(RegisterRequest req)
+    {
+        string apiBaseUrl = Configuration["applicationUrl"];
+        if (string.IsNullOrEmpty(apiBaseUrl))
+        {
+            registerResult = new OperationResult<bool>
+                {
+                    IsSuccess = false,
+                    Message = "User API base URL is not configured."
+                };
+            return false;
+        }
+
+        var response = await Http.PostAsJsonAsync($"{apiBaseUrl}api/user/register", req);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            registerResult = new OperationResult<bool>
+                {
+                    IsSuccess = false,
+                    Message = $"Server error: {response.ReasonPhrase}"
+                };
+            return false;
+        }
+
+        var result = await response.Content.ReadFromJsonAsync<OperationResult<bool>>();
+
+        if (result != null)
+        {
+            registerResult = result;
+            return registerResult.IsSuccess;
+        }
+
+        registerResult = new OperationResult<bool>
+            {
+                IsSuccess = false,
+                Message = "Unexpected response from server."
+            };
+        return false;
+    }
+}

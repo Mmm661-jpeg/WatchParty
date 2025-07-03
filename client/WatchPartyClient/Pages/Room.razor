@@ -1,0 +1,301 @@
+﻿@page "/room/{RoomId}"
+
+@using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.JSInterop
+@implements IAsyncDisposable
+
+@using WatchPartyClient.Models
+@using WatchPartyClient.Services
+@using WatchPartyClient.Utilities
+@inject HttpClient HttpClient
+
+<PageTitle>Watch Party - @RoomId</PageTitle>
+
+<div class="room-wrapper">
+    @if (_isLoading)
+    {
+        <div class="loading-screen">
+            <div class="spinner"></div>
+            <p>Loading room...</p>
+        </div>
+    }
+    else if (_joinFailed)
+    {
+        <div class="error-screen">
+            <div class="error-card">
+                <h3>⚠️ Unable to Join</h3>
+                <p>Failed to join room. It may not exist or is full.</p>
+                <button @onclick="ReturnHome" class="primary-button">Return Home</button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="room-layout">
+            <div class="video-section">
+                <button @onclick="ToggleSidebar" class="action-button sidebar-toggle">
+                    <i class="icon-menu"></i> Toggle Sidebar
+                </button>
+
+                <div class="video-container">
+                    @if (!string.IsNullOrEmpty(_currentVideoId))
+                    {
+                        <iframe class="youtube-iframe"
+                                src="https://www.youtube.com/embed/@_currentVideoId?enablejsapi=1&autoplay=1"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                    }
+                    else
+                    {
+                        <div class="no-video-placeholder">
+                            <i class="icon-video"></i>
+                            <p>No video selected</p>
+                            @if (_isOwner)
+                            {
+                                <p>As the host, you can add a video above</p>
+                            }
+                        </div>
+                    }
+                </div>
+
+                @if (_isOwner)
+                {
+                    <div class="video-controls">
+                        <div class="video-input-group">
+                            <input type="text" @bind="_newVideoId" placeholder="Enter YouTube video ID or URL" class="video-input" />
+                            <button @onclick="ChangeVideo" class="action-button">
+                                <i class="icon-play"></i> Change Video
+                            </button>
+                        </div>
+                        <button @onclick="RemoveVideo" class="action-button remove-button mt-2">
+                            <i class="icon-trash"></i> Remove Video
+                        </button>
+                    </div>
+                }
+            </div>
+
+            <div class="sidebar @( _sidebarCollapsed ? "collapsed" : "" )">
+                <div class="room-info">
+                    <h2 class="text-light">Room: @RoomId</h2>
+                </div>
+
+                <div class="participants-section">
+                    <h3 class="section-title">
+                        <i class="icon-users"></i> Participants
+                        <span class="badge">@_participants.Count</span>
+                    </h3>
+                    <div class="participants-list">
+                        @foreach (var user in _participants)
+                        {
+                            <div class="participant">
+                                <span class="user-icon">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <span class="username">@user</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string RoomId { get; set; }
+
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private RoomServices RoomService { get; set; }
+
+    private bool _isLoading = true;
+    private bool _joinFailed;
+    private bool _isOwner;
+    private string _currentVideoId = string.Empty;
+    private string _newVideoId = string.Empty;
+    private List<string> _participants = new();
+    private bool _sidebarCollapsed = false;
+
+    private string _userId = string.Empty;
+    private string _username = string.Empty;
+    private string _token = string.Empty;
+
+    private HubConnection _hubConnection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
+
+        try
+        {
+            var baseUrl = "http://localhost:5178/";
+
+            // First get room info to check if it's public
+            var room = await RoomService.GetRoomInfoAsync(RoomId);
+            if (room == null)
+            {
+                _joinFailed = true;
+                _isLoading = false;
+                return;
+            }
+
+            // Handle public room with no token
+            if (string.IsNullOrEmpty(_token) && !room.IsPrivate)
+            {
+                // Generate a guest user ID
+                _userId = $"guest_{Guid.NewGuid().ToString().Substring(0, 8)}";
+                _username = _userId;
+                _isOwner = false;
+                _currentVideoId = room.CurrentVideoId ?? string.Empty;
+
+                // Join room as guest
+                var joinResponse = await HttpClient.PostAsync($"{baseUrl}api/sync/rooms/joinRoom/{RoomId}/{_userId}", null);
+                if (!joinResponse.IsSuccessStatusCode)
+                {
+                    _joinFailed = true;
+                    _isLoading = false;
+                    return;
+                }
+
+                // Initialize hub connection without token
+                _hubConnection = new HubConnectionBuilder()
+                    .WithUrl($"{baseUrl}api/sync/room/hubs/roomSync")
+                    .WithAutomaticReconnect()
+                    .Build();
+
+                await _hubConnection.StartAsync();
+                RegisterHubEvents();
+                await _hubConnection.SendAsync("JoinRoom", RoomId, _userId, false);
+
+                _isLoading = false;
+                return;
+            }
+
+            // Existing token-based flow
+            var (_, userId, isOwner, joinFailed, videoId, hubConnection) =
+                await RoomService.JoinRoomAsync(RoomId, _token);
+
+            if (joinFailed)
+            {
+                _joinFailed = true;
+                _isLoading = false;
+                return;
+            }
+
+            _userId = userId;
+            _isOwner = isOwner;
+            _currentVideoId = videoId;
+            _hubConnection = hubConnection;
+            _username = JwtParser.GetUsername(_token) ?? _userId;
+
+            if (_hubConnection == null)
+            {
+                await InitializeHubConnection();
+            }
+
+            RegisterHubEvents();
+            await _hubConnection.SendAsync("JoinRoom", RoomId, _userId, _isOwner);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error joining room: {ex.Message}");
+            _joinFailed = true;
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task InitializeHubConnection()
+    {
+        var baseUrl = "http://localhost:5178/";
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl($"{baseUrl}api/sync/room/hubs/roomSync", options =>
+            {
+                if (!string.IsNullOrEmpty(_token))
+                    options.AccessTokenProvider = () => Task.FromResult(_token);
+            })
+            .WithAutomaticReconnect()
+            .Build();
+
+        await _hubConnection.StartAsync();
+    }
+
+    private void RegisterHubEvents()
+    {
+        _hubConnection.On<string>("ReceiveNewVideoId", videoId =>
+        {
+            _currentVideoId = videoId;
+            InvokeAsync(StateHasChanged);
+        });
+
+        _hubConnection.On<string>("UserJoined", userId =>
+        {
+            if (!_participants.Contains(userId))
+            {
+                _participants.Add(userId);
+                InvokeAsync(StateHasChanged);
+            }
+        });
+
+        _hubConnection.On<string>("UserLeft", userId =>
+        {
+            _participants.Remove(userId);
+            InvokeAsync(StateHasChanged);
+        });
+
+        _hubConnection.On("HostDisconnected", () =>
+        {
+            Navigation.NavigateTo("/");
+        });
+    }
+
+    private void ToggleSidebar()
+    {
+        _sidebarCollapsed = !_sidebarCollapsed;
+    }
+
+    private async Task RemoveVideo()
+    {
+        if (_isOwner)
+        {
+            _currentVideoId = string.Empty;
+            await _hubConnection.SendAsync("HostSetVideo", RoomId, string.Empty, _userId);
+            StateHasChanged();
+        }
+    }
+
+    private async Task ChangeVideo()
+    {
+        if (string.IsNullOrWhiteSpace(_newVideoId))
+            return;
+
+        var trimmedVideoId = _newVideoId.Trim();
+
+        var success = await RoomService.UpdateCurrentVideoIdAsync(RoomId, trimmedVideoId, _token);
+        if (success)
+        {
+            _currentVideoId = trimmedVideoId;
+            _newVideoId = string.Empty;
+            await _hubConnection.SendAsync("HostSetVideo", RoomId, _currentVideoId, _userId);
+            StateHasChanged();
+        }
+    }
+
+    private void ReturnHome()
+    {
+        Navigation.NavigateTo("/");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_hubConnection != null)
+        {
+            await _hubConnection.SendAsync("LeaveRoom", RoomId, _userId);
+            await _hubConnection.DisposeAsync();
+        }
+    }
+}

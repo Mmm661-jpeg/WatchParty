@@ -1,0 +1,104 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "SharedProtos";
+
+import "google/protobuf/timestamp.proto";
+
+
+package video;
+
+service VideoService {
+  rpc GetVideo (GetVideoRequest) returns (GetVideoResponse);
+  rpc AddVideo (AddVideoRequest) returns (AddVideoResponse);
+  rpc GetVideosByUserId (GetVideosByUserIdRequest) returns (GetVideosByUserIdResponse);
+  rpc GetVideosByRoomId (GetVideosByRoomIdRequest) returns (GetVideosByRoomIdResponse);
+  rpc DeleteVideo (DeleteVideoRequest) returns (DeleteVideoResponse);
+  rpc SearchVideos (SearchVideosRequest) returns (SearchVideosResponse);
+}
+
+message GetVideoRequest {
+  string video_id = 1;
+  string user_id = 2;
+  string room_id = 3;
+}
+
+message GetVideoResponse {
+  GrpcVideo video = 1;
+}
+
+message AddVideoRequest {
+	string video_id = 1;
+	string platform = 2;
+	string title = 3;
+	string thubnailUrl = 4;
+	double duration = 5;
+	string user_id = 6;
+	string room_id = 7;
+	bool isActive = 8;
+	string channelName = 9;
+}
+
+message AddVideoResponse {
+  GrpcVideo video = 1;
+}
+
+message GetVideosByUserIdRequest
+{
+	  string user_id = 1;
+}
+
+message GetVideosByUserIdResponse {
+  repeated GrpcVideo videos = 1;
+}
+
+message GetVideosByRoomIdRequest {
+  string room_id = 1;
+}
+message GetVideosByRoomIdResponse {
+  repeated GrpcVideo videos = 1;
+}
+
+message DeleteVideoRequest {
+  string video_id = 1;
+}
+message DeleteVideoResponse {
+  bool success = 1;
+}
+
+message SearchVideosRequest {
+  string query = 1;
+  int32 maxResults = 2;
+}
+
+message SearchVideosResponse {
+  repeated GrpcVideo videos = 1;
+}
+
+message GrpcVideo {
+  string video_id = 1;
+  string platform = 2;
+  string title = 3;
+  string thumbnailUrl = 4;
+  double duration = 5;
+  string user_id = 6;
+  string room_id = 7;
+  bool isActive = 8;
+  string channelName = 9;
+  string videoUrl = 10;
+  google.protobuf.Timestamp added_at = 11;
+
+}
+
+
+
+       
+
+
+       
+
+
+      
+
+
+
+  

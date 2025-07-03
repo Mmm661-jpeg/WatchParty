@@ -1,0 +1,115 @@
+﻿@page "/search"
+@inject HttpClient HttpClient
+@inject IConfiguration Configuration
+
+@using WatchPartyClient.Models
+
+<PageTitle>Search Rooms</PageTitle>
+
+<h1>Search Rooms</h1>
+
+<div class="search-container">
+    <input class="search-input"
+           placeholder="Search for rooms..."
+           @bind="searchTerm"
+           @onkeydown="@(async e => { if (e.Key == "Enter") await SearchRooms(); })" />
+    <button class="search-button" @onclick="SearchRooms">
+        <i class="fas fa-search"></i> Search
+    </button>
+</div>
+
+@if (isLoading)
+{
+    <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading rooms...
+    </div>
+}
+else if (Rooms == null)
+{
+    <p>Enter a search term to find rooms</p>
+}
+else if (!Rooms.Any())
+{
+    <p>No rooms found matching your search</p>
+}
+else
+{
+    <div class="rooms-grid">
+        @foreach (var room in Rooms)
+        {
+            <div class="room-card">
+                <div class="room-image-container">
+                    <img src="@GetRoomImage(room)" alt="@room.RoomName" />
+                    @if (room.IsPrivate)
+                    {
+                        <span class="private-badge">
+                            <i class="fas fa-lock"></i> Private
+                        </span>
+                    }
+                </div>
+                <div class="room-info">
+                    <h3>@room.RoomName</h3>
+                    <p class="room-meta">
+                        <i class="fas fa-user"></i> @room.ParticipantIds.Count/@room.MaxOccupancy
+                    </p>
+                    <p class="room-host">
+                        <i class="fas fa-user-circle"></i> @(room.HostId == currentUserId ? "You" : "Host")
+                    </p>
+                </div>
+                <NavLink class="join-button" href="@($"/join-room/{room.RoomId}")" style="background-color:#28a745; color:white; display:flex; justify-content:center; align-items:center; padding:0.75rem; border-radius:0 0 8px 8px;">
+                    <i class="fas fa-door-open"></i> Join
+                </NavLink>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<RoomDto>? Rooms;
+    private string searchTerm = string.Empty;
+    private bool isLoading = false;
+    private string? currentUserId;
+
+
+
+    private async Task SearchRooms()
+    {
+        if (string.IsNullOrWhiteSpace(searchTerm)) return;
+
+        isLoading = true;
+        Rooms = null;
+        StateHasChanged();
+
+        try
+        {
+            string baseUrl = Configuration["applicationUrl"] ?? "http://localhost:5178/";
+            var response = await HttpClient.GetFromJsonAsync<OperationResult<List<RoomDto>>>(
+                $"{baseUrl}api/sync/rooms/searchRooms/{searchTerm}?page=1&pageSize=10");
+
+            if (response?.IsSuccess == true)
+            {
+                Rooms = response.Data;
+                StateHasChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Search error: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private string GetRoomImage(RoomDto room)
+    {
+        // Use a placeholder or implement your own image logic
+        return "https://picsum.photos/300/200?random=" + room.RoomId.GetHashCode();
+    }
+
+ 
+
+
+}
+

@@ -1,0 +1,256 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "SharedProtos";
+
+import "google/protobuf/timestamp.proto";
+
+
+package room;
+
+service RoomService {
+  rpc CreateRoom (CreateRoomRequest) returns (CreateRoomResponse);
+  rpc DeleteRoom (DeleteRoomRequest) returns (DeleteRoomResponse);
+  rpc JoinRoom (JoinRoomRequest) returns (JoinRoomResponse);
+  rpc LeaveRoom (LeaveRoomRequest) returns (LeaveRoomResponse);
+  rpc SearchRoom (SearchRoomRequest) returns (SearchRoomResponse);
+  rpc GetRoomById (GetRoomByIdRequest) returns (GetRoomByIdResponse);
+  rpc GetPublicRooms (GetPublicRoomsRequest) returns (GetPublicRoomsResponse);
+  rpc UpdateRoom (UpdateRoomRequest) returns (UpdateRoomResponse);
+  rpc GenerateNewRoomPass (GenerateNewRoomPassRequest) returns (GenerateNewRoomPassResponse);
+  rpc RoomExists (RoomExistsRequest) returns (RoomExistsResponse);
+  rpc GetRoomsByHost (GetRoomsByHostRequest) returns (GetRoomsByHostResponse);
+  rpc UpdatePlaybackState (UpdatePlaybackStateRequest) returns (UpdatePlaybackStateResponse);
+  rpc GetPlaybackState (GetRoomByIdRequest) returns (GetPlaybackStateResponse);
+  rpc ValidateRoomPass (ValidateRoomPassRequest) returns (ValidateRoomPassResponse);
+  rpc IsUserInRoom (IsUserInRoomRequest) returns (IsUserInRoomResponse);
+  rpc IsRoomFull (IsRoomFullRequest) returns (IsRoomFullResponse);
+  rpc MakeRoomPrivate (MakeRoomPrivateRequest) returns (MakeRoomPrivateResponse);
+  rpc MakeRoomPublic (MakeRoomPublicRequest) returns (MakeRoomPublicResponse);
+  rpc GetAccessCode (GetAccessCodeRequest) returns (GetAccessCodeResponse);
+  rpc UpdateCurrentVideoId (UpdateCurrentVideoIdRequest) returns (UpdateCurrentVideoIdResponse);
+
+}
+
+message CreateRoomRequest {
+	string hostId = 1;
+	string roomName = 2;
+	bool isPrivate = 3;
+	int32 maxOccupancy = 4;
+}
+
+message CreateRoomResponse {
+	GrpcRoom room = 1;
+}
+
+message DeleteRoomRequest{
+    string roomId = 1;
+}
+
+message DeleteRoomResponse{
+    bool success = 1;
+}
+
+
+message JoinRoomRequest {
+    string roomId = 1;
+    string userId = 2;
+}
+
+message JoinRoomResponse {
+    bool success = 1;
+}
+
+message LeaveRoomRequest{
+    string roomId = 1;
+    string userId = 2;
+}
+
+message LeaveRoomResponse{
+     bool success = 1;
+}
+
+
+message SearchRoomRequest{
+    string searchTerm = 1;
+	int32 page = 2; 
+	int32 pageSize = 3; 
+}
+
+message SearchRoomResponse{
+    repeated GrpcRoom rooms = 1;
+}
+
+message GetRoomByIdRequest {
+	string roomId = 1;
+}
+
+message GetRoomByIdResponse {
+	GrpcRoom room = 1;
+}
+
+message GetPublicRoomsRequest {
+	int32 page = 1; // Page number for pagination
+	int32 pageSize = 2; // Number of rooms per page
+}
+
+message GetPublicRoomsResponse {
+	repeated GrpcRoom rooms = 1; // List of public rooms
+	int32 totalCount = 2; // Total number of public rooms available
+}
+
+message UpdateRoomRequest {
+	string roomId = 1;
+	string roomName = 2;
+	int32 maxOccupancy = 4;
+    string hostId = 5;
+}
+
+message UpdateRoomResponse {
+	GrpcRoom room = 1;
+}
+
+message GenerateNewRoomPassRequest {
+	string roomId = 1;
+}
+
+message GenerateNewRoomPassResponse {
+	string newAccessCode = 1; // New access code for the room
+}
+
+message RoomExistsRequest {
+	string roomId = 1;
+}
+
+message RoomExistsResponse {
+	bool exists = 1; // Indicates if the room exists
+}
+
+message GetRoomsByHostRequest {
+	string hostId = 1; // ID of the host
+}
+
+message GetRoomsByHostResponse {
+	repeated GrpcRoom rooms = 1; // List of rooms hosted by the specified host
+}
+
+message UpdatePlaybackStateRequest {
+	string roomId = 1;
+	string videoId = 2; // ID of the video being played
+	double position = 3; // Current playback position in seconds
+	bool isPaused = 4; // Playback state (paused or playing)
+}
+
+message UpdatePlaybackStateResponse {
+	bool success = 1; // Indicates if the playback state was successfully updated
+}
+
+message GetPlaybackStateResponse {
+	string roomId = 1; // ID of the room
+	string currentVideoId = 2; // ID of the currently playing video
+	double currentPlaybackPosition = 3; // Current playback position in seconds
+	bool isPaused = 4; // Indicates if the playback is paused
+	google.protobuf.Timestamp lastSyncUpdate = 5;
+
+}
+
+message ValidateRoomPassRequest {
+	string roomId = 1;
+	string accessCode = 2; // Access code to validate
+}
+
+message ValidateRoomPassResponse {
+	bool isValid = 1; // Indicates if the access code is valid
+}
+
+message IsUserInRoomRequest {
+	string roomId = 1;
+	string userId = 2; // ID of the user to check
+}
+
+message IsUserInRoomResponse {
+	bool isInRoom = 1; // Indicates if the user is in the room
+}
+
+message IsRoomFullRequest {
+	string roomId = 1; // ID of the room to check
+}
+
+message IsRoomFullResponse {
+	bool isFull = 1; // Indicates if the room is full
+}
+
+message MakeRoomPrivateRequest {
+	string roomId = 1; // ID of the room to make private
+}
+
+message MakeRoomPrivateResponse {
+	bool success = 1; // Indicates if the room was successfully made private
+	string newAccessCode = 2; // New access code for the room if it was made private
+}
+
+message MakeRoomPublicRequest {
+	string roomId = 1; // ID of the room to make public
+}
+
+message MakeRoomPublicResponse {
+	bool success = 1; // Indicates if the room was successfully made public
+}
+
+message GetAccessCodeRequest {
+	string roomId = 1; // ID of the room to get the access code for
+	string hostId = 2; // ID of the host requesting the access code
+}
+
+message GetAccessCodeResponse {
+	string accessCode = 1; // Access code for the room
+}
+
+message UpdateCurrentVideoIdRequest {
+	string roomId = 1; // ID of the room
+	string newVideoId = 2; // New video ID to set
+}
+
+message UpdateCurrentVideoIdResponse {
+	bool success = 1; // Indicates if the video ID was successfully updated
+}
+
+
+
+
+message GrpcRoom{
+    string roomId = 1;
+    string hostId = 2;
+    string roomName = 3;
+    string accessCode = 4;
+    bool isPrivate = 5;
+    string currentVideoId = 6;
+    double currentPlaybackPosition = 7;
+    bool isPaused = 8;
+    int32 maxOccupancy = 9;
+    repeated string participantIds = 10; // List of user IDs currently in the room
+  google.protobuf.Timestamp createdAt = 11;
+  google.protobuf.Timestamp lastSyncUpdate = 13;
+}
+
+       
+
+       
+
+       
+
+      
+
+      
+
+      
+       
+       
+
+       
+       
+
+     
+
+        
+
+      

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Layout\LoginLayout.razor.css" />
+    <None Remove="Pages\Account.razor.css" />
+    <None Remove="Pages\Home.razor.css" />
+    <None Remove="Pages\JoinRoomPage.razor.css" />
+    <None Remove="Pages\Room.razor.css" />
+    <None Remove="Pages\Search.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Layout\LoginLayout.razor.css" />
+    <Content Include="Pages\Account.razor.css" />
+    <Content Include="Pages\Home.razor.css" />
+    <Content Include="Pages\JoinRoomPage.razor.css" />
+    <Content Include="Pages\Room.razor.css" />
+    <Content Include="Pages\Search.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.8" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.6" />
+  </ItemGroup>
+
+</Project>

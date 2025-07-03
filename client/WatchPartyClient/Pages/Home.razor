@@ -1,0 +1,107 @@
+﻿@page "/"
+@inject HttpClient HttpClient
+@inject IConfiguration Configuration
+@inject IJSRuntime JSRuntime
+
+@using WatchPartyClient.Models
+
+<PageTitle>WatchParty - Home</PageTitle>
+
+<h1>Public Rooms</h1>
+
+@if (isLoading)
+{
+    <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading rooms...
+    </div>
+}
+else if (errorMessage is not null)
+{
+    <p class="text-danger">@errorMessage</p>
+}
+else if (!Rooms.Any())
+{
+    <p>No public rooms available at the moment</p>
+}
+else
+{
+    <div class="rooms-grid">
+        @foreach (var room in Rooms)
+        {
+            <div class="room-card">
+                <div class="room-image-container">
+                    <img src="@GetRoomImage(room)" alt="@room.RoomName" />
+                    @if (room.IsPrivate)
+                    {
+                        <span class="private-badge">
+                            <i class="fas fa-lock"></i> Private
+                        </span>
+                    }
+                </div>
+                <div class="room-info">
+                    <h3>@room.RoomName</h3>
+                    <p class="room-meta">
+                        <i class="fas fa-user"></i> @room.ParticipantIds.Count/@room.MaxOccupancy
+                    </p>
+                    <p class="room-host">
+                        <i class="fas fa-user-circle"></i> @(room.HostId == currentUserId ? "You" : "Host")
+                    </p>
+                </div>
+                <NavLink class="join-button" href="@($"/join-room/{room.RoomId}")" style="background-color:#28a745; color:white; display:flex; justify-content:center; align-items:center; padding:0.75rem; border-radius:0 0 8px 8px;">
+                    <i class="fas fa-door-open"></i> Join
+                </NavLink>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<RoomDto> Rooms = new List<RoomDto>();
+    private bool isLoading = true;
+    private string? errorMessage;
+    private string? currentUserId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+           
+
+            var baseUrl = Configuration["applicationUrl"] ?? "http://localhost:5178/";
+            var url = $"{baseUrl}api/sync/rooms/getPublicRooms?page=1&pageSize=20";
+            var response = await HttpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<OperationResult<List<RoomDto>>>();
+                if (result?.IsSuccess == true && result.Data != null)
+                {
+                    Rooms = result.Data;
+                }
+                else
+                {
+                    errorMessage = result?.Message ?? "Failed to load rooms.";
+                }
+            }
+            else
+            {
+                errorMessage = $"Server returned error: {response.StatusCode}";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error fetching rooms: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private string GetRoomImage(RoomDto room)
+    {
+        // Use different images based on room ID hash
+        return $"https://picsum.photos/300/200?random={room.RoomId.GetHashCode()}";
+    }
+}
+
