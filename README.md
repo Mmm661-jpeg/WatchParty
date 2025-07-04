@@ -79,4 +79,6 @@ The **SyncService** supports both SignalR and gRPC streaming protocols to keep v
 
 ---
 
+*Note: The backend services for real-time chat (`ChatService`) and playback synchronization (`SyncService`) are fully implemented and expose the necessary endpoints. However, client-side UI integration for these features is currently in progress, with code scaffolding in place to request and consume these endpoints.*
+
 
