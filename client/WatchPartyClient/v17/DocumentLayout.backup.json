@@ -1,0 +1,557 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\search.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\search.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\home.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\home.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\search.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\search.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\joinroompage.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\joinroompage.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\joinroompage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\joinroompage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\room.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\room.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\services\\roomservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\services\\roomservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\account.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\account.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\room.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\room.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\account.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\account.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\utilities\\jwtparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\utilities\\jwtparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\wwwroot\\js\\youtubeplayer.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\wwwroot\\js\\youtubeplayer.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\wwwroot\\js\\videoplayerinterop.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\wwwroot\\js\\videoplayerinterop.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\wwwroot\\js\\videoplayerinterloper2.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\wwwroot\\js\\videoplayerinterloper2.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\pages\\loginpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\pages\\loginpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\models\\playbackstatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\models\\playbackstatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\models\\roomdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\models\\roomdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\models\\operationresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\models\\operationresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\models\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\models\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\layout\\loginlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\layout\\loginlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\layout\\loginlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\layout\\loginlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\HOZ\\source\\repos\\WatchParty\\Services\\UserService\\Domain\\UtilModels\\OperationResult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|c:\\users\\hoz\\source\\repos\\watchpartyclient\\watchpartyclient\\layout\\navmenu.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{AF93D3D2-A599-47E2-8324-768F27B51865}|WatchPartyClient\\WatchPartyClient.csproj|solutionrelative:watchpartyclient\\layout\\navmenu.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0174dea2-fdbe-4ef1-8f99-c0beae78880f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Home.razor.css",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Home.razor.css",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\Home.razor.css",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Home.razor.css",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\Home.razor.css",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-07-03T13:40:39.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Search.razor.css",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Search.razor.css",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\Search.razor.css",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Search.razor.css",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\Search.razor.css",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAAAGcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-07-03T13:39:37.926Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "JoinRoomPage.razor",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\JoinRoomPage.razor",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\JoinRoomPage.razor",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\JoinRoomPage.razor",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\JoinRoomPage.razor",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAmwF4AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-03T12:13:20.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Room.razor",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Room.razor",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\Room.razor",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Room.razor",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\Room.razor",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAAAJkAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-29T15:59:11.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Home.razor",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\Home.razor",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAADEAAADnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-29T13:22:39.66Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Search.razor",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Search.razor",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\Search.razor",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Search.razor",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\Search.razor",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAADoAAADnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-29T07:47:14.268Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "JoinRoomPage.razor.css",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\JoinRoomPage.razor.css",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\JoinRoomPage.razor.css",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\JoinRoomPage.razor.css",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\JoinRoomPage.razor.css",
+              "ViewState": "AgIAACMAAAAAAAAAAAAqwC4AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-07-03T14:01:17.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RoomServices.cs",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Services\\RoomServices.cs",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Services\\RoomServices.cs",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Services\\RoomServices.cs",
+              "RelativeToolTip": "WatchPartyClient\\Services\\RoomServices.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAcwE0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T21:15:38.272Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Room.razor.css",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Room.razor.css",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\Room.razor.css",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Room.razor.css",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\Room.razor.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-07-02T08:28:18.285Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Account.razor",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Account.razor",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\Account.razor",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Account.razor",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\Account.razor",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAAALkAAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-30T22:30:39.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Account.razor.css",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Account.razor.css",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\Account.razor.css",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\Account.razor.css",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\Account.razor.css",
+              "ViewState": "AgIAAFcBAAAAAAAAAAAAAE4BAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-07-03T13:40:48.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "JwtParser.cs",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Utilities\\JwtParser.cs",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Utilities\\JwtParser.cs",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Utilities\\JwtParser.cs",
+              "RelativeToolTip": "WatchPartyClient\\Utilities\\JwtParser.cs",
+              "ViewState": "AgIAALEAAAAAAAAAAAAIwLgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T11:08:00.74Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Program.cs",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Program.cs",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Program.cs",
+              "RelativeToolTip": "WatchPartyClient\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T11:05:40.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "WatchPartyClient\\wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\wwwroot\\index.html",
+              "RelativeToolTip": "WatchPartyClient\\wwwroot\\index.html",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAqwAwAAABvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-06-30T17:37:28.825Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "App.razor",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\App.razor",
+              "RelativeDocumentMoniker": "WatchPartyClient\\App.razor",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\App.razor",
+              "RelativeToolTip": "WatchPartyClient\\App.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-02T05:22:43.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\_Imports.razor",
+              "RelativeDocumentMoniker": "WatchPartyClient\\_Imports.razor",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\_Imports.razor",
+              "RelativeToolTip": "WatchPartyClient\\_Imports.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-02T05:22:52.786Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "youtubePlayer.js",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\wwwroot\\js\\youtubePlayer.js",
+              "RelativeDocumentMoniker": "WatchPartyClient\\wwwroot\\js\\youtubePlayer.js",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\wwwroot\\js\\youtubePlayer.js",
+              "RelativeToolTip": "WatchPartyClient\\wwwroot\\js\\youtubePlayer.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAwwBsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-02T06:04:26.016Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "videoPlayerInterop.js",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\wwwroot\\js\\videoPlayerInterop.js",
+              "RelativeDocumentMoniker": "WatchPartyClient\\wwwroot\\js\\videoPlayerInterop.js",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\wwwroot\\js\\videoPlayerInterop.js",
+              "RelativeToolTip": "WatchPartyClient\\wwwroot\\js\\videoPlayerInterop.js",
+              "ViewState": "AgIAABMBAAAAAAAAAAAIwC4BAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-01T09:40:36.589Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "videoPlayerInterloper2.js",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\wwwroot\\js\\videoPlayerInterloper2.js",
+              "RelativeDocumentMoniker": "WatchPartyClient\\wwwroot\\js\\videoPlayerInterloper2.js",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\wwwroot\\js\\videoPlayerInterloper2.js",
+              "RelativeToolTip": "WatchPartyClient\\wwwroot\\js\\videoPlayerInterloper2.js",
+              "ViewState": "AgIAAAsBAAAAAAAAAAAcwCkBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-02T04:49:52.66Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "LoginPage.razor",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\LoginPage.razor",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Pages\\LoginPage.razor",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Pages\\LoginPage.razor",
+              "RelativeToolTip": "WatchPartyClient\\Pages\\LoginPage.razor",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAqwJEAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-29T08:00:37.898Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "PlaybackStateDto.cs",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Models\\PlaybackStateDto.cs",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Models\\PlaybackStateDto.cs",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Models\\PlaybackStateDto.cs",
+              "RelativeToolTip": "WatchPartyClient\\Models\\PlaybackStateDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T09:38:26.875Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "RoomDto.cs",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Models\\RoomDto.cs",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Models\\RoomDto.cs",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Models\\RoomDto.cs",
+              "RelativeToolTip": "WatchPartyClient\\Models\\RoomDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T15:15:42.182Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "WatchPartyClient\\Layout\\NavMenu.razor",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-28T14:58:08.868Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "OperationResult.cs",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Models\\OperationResult.cs",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Models\\OperationResult.cs",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Models\\OperationResult.cs",
+              "RelativeToolTip": "WatchPartyClient\\Models\\OperationResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T09:42:06.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Properties\\launchSettings.json",
+              "RelativeToolTip": "WatchPartyClient\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-30T11:01:42.576Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Models\\UserDto.cs",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Models\\UserDto.cs",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Models\\UserDto.cs",
+              "RelativeToolTip": "WatchPartyClient\\Models\\UserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T15:33:29.91Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "OperationResult.cs",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchParty\\Services\\UserService\\Domain\\UtilModels\\OperationResult.cs",
+              "RelativeDocumentMoniker": "..\\WatchParty\\Services\\UserService\\Domain\\UtilModels\\OperationResult.cs",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchParty\\Services\\UserService\\Domain\\UtilModels\\OperationResult.cs",
+              "RelativeToolTip": "..\\WatchParty\\Services\\UserService\\Domain\\UtilModels\\OperationResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T09:35:50.05Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "LoginLayout.razor",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Layout\\LoginLayout.razor",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Layout\\LoginLayout.razor",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Layout\\LoginLayout.razor",
+              "RelativeToolTip": "WatchPartyClient\\Layout\\LoginLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-29T07:59:44.326Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "LoginLayout.razor.css",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Layout\\LoginLayout.razor.css",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Layout\\LoginLayout.razor.css",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Layout\\LoginLayout.razor.css",
+              "RelativeToolTip": "WatchPartyClient\\Layout\\LoginLayout.razor.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-06-29T08:08:27.357Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "NavMenu.razor.css",
+              "DocumentMoniker": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Layout\\NavMenu.razor.css",
+              "RelativeDocumentMoniker": "WatchPartyClient\\Layout\\NavMenu.razor.css",
+              "ToolTip": "C:\\Users\\HOZ\\source\\repos\\WatchPartyClient\\WatchPartyClient\\Layout\\NavMenu.razor.css",
+              "RelativeToolTip": "WatchPartyClient\\Layout\\NavMenu.razor.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-06-29T07:35:50.197Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
