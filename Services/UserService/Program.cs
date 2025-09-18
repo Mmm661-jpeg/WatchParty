@@ -6,6 +6,9 @@ using UserService.Domain.Entities;
 using UserService.Domain.UtilModels;
 using UserService.Endpoints;
 using UserService.Extensions;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -78,17 +81,21 @@ builder.Services.AddContainerServicesExtended();
 
 
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5018, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1; 
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerExtended();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
-
-
-
-
-
 
 app.UseRouting();
 

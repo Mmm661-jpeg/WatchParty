@@ -9,6 +9,8 @@ using VideoService.Data.Interfaces;
 using VideoService.Data.Repos;
 using VideoService.Endpoints;
 
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -52,6 +54,10 @@ builder.WebHost.ConfigureKestrel(options =>
     {
         listenOptions.Protocols = HttpProtocols.Http2;
     });
+    options.ListenLocalhost(5146, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1;
+    });
 });
 
 var app = builder.Build();
@@ -63,10 +69,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
-
 app.MapGrpcService<VideoGrpcServices>();
-
 //app.MapVideoEndpoints();
 
 

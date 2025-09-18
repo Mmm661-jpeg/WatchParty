@@ -4,6 +4,7 @@
 @using Microsoft.JSInterop
 @implements IAsyncDisposable
 
+@using WatchPartyClient.Components
 @using WatchPartyClient.Models
 @using WatchPartyClient.Services
 @using WatchPartyClient.Utilities
@@ -23,7 +24,7 @@
     {
         <div class="error-screen">
             <div class="error-card">
-                <h3>⚠️ Unable to Join</h3>
+                <h3>Unable to Join</h3>
                 <p>Failed to join room. It may not exist or is full.</p>
                 <button @onclick="ReturnHome" class="primary-button">Return Home</button>
             </div>
@@ -102,6 +103,9 @@
     }
 </div>
 
+
+<Chat RoomId="@RoomId" UserId="@_userId" Username="@_username" />
+
 @code {
     [Parameter]
     public string RoomId { get; set; }
@@ -123,6 +127,8 @@
     private string _token = string.Empty;
 
     private HubConnection _hubConnection;
+    private DotNetObjectReference<Room> _dotNetRef;
+    private bool _isProcessingUpdate = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -141,16 +147,16 @@
                 return;
             }
 
-            // Handle public room with no token
+           
             if (string.IsNullOrEmpty(_token) && !room.IsPrivate)
             {
-                // Generate a guest user ID
+               
                 _userId = $"guest_{Guid.NewGuid().ToString().Substring(0, 8)}";
                 _username = _userId;
                 _isOwner = false;
                 _currentVideoId = room.CurrentVideoId ?? string.Empty;
 
-                // Join room as guest
+            
                 var joinResponse = await HttpClient.PostAsync($"{baseUrl}api/sync/rooms/joinRoom/{RoomId}/{_userId}", null);
                 if (!joinResponse.IsSuccessStatusCode)
                 {
@@ -159,7 +165,7 @@
                     return;
                 }
 
-                // Initialize hub connection without token
+             
                 _hubConnection = new HubConnectionBuilder()
                     .WithUrl($"{baseUrl}api/sync/room/hubs/roomSync")
                     .WithAutomaticReconnect()
@@ -173,7 +179,7 @@
                 return;
             }
 
-            // Existing token-based flow
+
             var (_, userId, isOwner, joinFailed, videoId, hubConnection) =
                 await RoomService.JoinRoomAsync(RoomId, _token);
 
@@ -288,6 +294,26 @@
     private void ReturnHome()
     {
         Navigation.NavigateTo("/");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !string.IsNullOrEmpty(_currentVideoId))
+        {
+            _dotNetRef = DotNetObjectReference.Create(this);
+            await JSRuntime.InvokeVoidAsync("initializeYoutubePlayer", _currentVideoId, _dotNetRef);
+        }
+    }
+
+    [JSInvokable]
+    public async Task OnPlaybackUpdate(double position, bool isPaused)
+    {
+        if (_isOwner && !_isProcessingUpdate)
+        {
+            _isProcessingUpdate = true;
+            await RoomService.UpdatePlaybackState(RoomId, position, isPaused, _currentVideoId, _token);
+            _isProcessingUpdate = false;
+        }
     }
 
     public async ValueTask DisposeAsync()

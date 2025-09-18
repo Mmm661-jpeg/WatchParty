@@ -7,6 +7,8 @@ using RoomService.Data.Interfaces;
 using RoomService.Data.Repos;
 using RoomService.Endpoints;
 
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,14 +28,18 @@ builder.Services.AddSingleton<IDbContext>(sp =>
 
 builder.Services.AddGrpc();
 
+
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenLocalhost(5087, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http2;
     });
+    options.ListenLocalhost(5088, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1;
+    });
 });
-
 
 var app = builder.Build();
 
@@ -44,15 +50,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
 
 app.MapGrpcService<RoomGrpcService>();
 
-//app.MapRoomEndpoints();
 
-
-
-
+app.MapRoomEndpoints();
 
 app.Run();
 

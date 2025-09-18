@@ -8,12 +8,13 @@ using SyncService.Extenstions;
 using SyncService.Hubs;
 using System.Threading.RateLimiting;
 
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Information);
-
 
 builder.Services.Configure<JwtModel>(builder.Configuration.GetSection("JwtSettings"));
 
@@ -26,8 +27,17 @@ if (string.IsNullOrEmpty(issuer) || string.IsNullOrEmpty(audience) || string.IsN
     throw new ArgumentException("JWT settings are not properly configured in appsettings.json");
 }
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials()
+              .SetIsOriginAllowed(_ => true);
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerExtended();
 
@@ -88,11 +98,22 @@ builder.Services.AddSignalR()
         options.PayloadSerializerOptions.PropertyNamingPolicy = null;
     });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5275, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 app.UseSwaggerExtended();
+
+
+app.UseCors("AllowAll");
 
 
 //app.UseHttpsRedirection();
@@ -103,11 +124,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
+
 app.MapRoomSyncEndpoints();
 app.MapChatSyncEndpoints();
 app.MapVideoSyncEndpoints();
 
 app.MapHub<RoomSyncHub>("/api/sync/room/hubs/roomSync"); 
+app.MapHub<ChatHub>("/api/sync/chat/hubs/chatSync");
 
 app.Run();
 
