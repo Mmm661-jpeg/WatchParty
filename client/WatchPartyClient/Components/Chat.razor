@@ -1,0 +1,190 @@
+@using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.AspNetCore.Components.Web
+@using System.Text.Json.Serialization
+@inject IJSRuntime JSRuntime
+@inject HttpClient HttpClient
+
+<div class="chat-container">
+    <div class="chat-header" @onclick="ToggleChat">
+        <h3>Chat</h3>
+        <span class="toggle-icon">@(_expanded ? "?" : "?")</span>
+    </div>
+    @if (_expanded)
+    {
+        <div class="chat-messages" @ref="messagesDiv">
+            @if (_loading)
+            {
+                <div class="chat-loading">Loading chats...</div>
+            }
+            else if (_messages.Count == 0)
+            {
+                <div class="chat-empty">No chats yet.</div>
+            }
+            else
+            {
+                @foreach (var msg in _messages)
+                {
+                    <div class="chat-message @(msg.Username == Username ? "own" : "")">
+                        <div class="message-meta">
+                            <span class="chat-user">@msg.Username</span>
+                            <span class="chat-time">@msg.Timestamp.ToLocalTime().ToString("HH:mm")</span>
+                        </div>
+                        <div class="chat-text">@msg.Message</div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type a message..." @bind="_currentMessage" @bind:event="oninput" @onkeydown="HandleKeyDown" />
+            <button @onclick="SendMessage" disabled="@string.IsNullOrWhiteSpace(_currentMessage)">Send</button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string RoomId { get; set; }
+    [Parameter] public string UserId { get; set; }
+    [Parameter] public string Username { get; set; }
+
+    private HubConnection _chatHub;
+    private List<ChatMessage> _messages = new();
+    private string _currentMessage = "";
+    private bool _expanded = true;
+    private bool _loading = true;
+    private ElementReference messagesDiv;
+
+    protected override async Task OnInitializedAsync()
+    {
+   
+        _chatHub = new HubConnectionBuilder()
+            .WithUrl("http://localhost:5178/api/sync/chat/hubs/chatSync")
+            .WithAutomaticReconnect()
+            .Build();
+
+        _chatHub.On<string, string, DateTimeOffset>("ReceiveMessage", (sender, message, timestamp) =>
+        {
+            _messages.Add(new ChatMessage { Username = sender, Message = message, Timestamp = timestamp });
+            InvokeAsync(() =>
+            {
+                StateHasChanged();
+                ScrollToBottom();
+            });
+        });
+
+        await _chatHub.StartAsync();
+        await _chatHub.SendAsync("JoinChatRoom", RoomId);
+
+    
+        try
+        {
+            var response = await HttpClient.GetFromJsonAsync<OperationResult<List<ChatMessageDto>>>($"http://localhost:5178/api/sync/chat/room/{RoomId}");
+            if (response != null && response.Success && response.Data[0] is not null)
+        {
+                foreach (var chat in response.Data)
+                {
+                    _messages.Add(new ChatMessage
+                    {
+                        Username = chat.Username,
+                        Message = chat.Message,
+                        Timestamp = chat.Timestamp
+                    });
+                }
+            }
+        }
+        catch
+        {
+
+        }
+        _loading = false;
+        StateHasChanged();
+        ScrollToBottom();
+    }
+
+    private async Task SendMessage()
+    {
+        if (string.IsNullOrWhiteSpace(_currentMessage))
+            return;
+
+        try
+        {
+            await _chatHub.SendAsync("SendMessage", RoomId, UserId, Username, _currentMessage);
+            _currentMessage = "";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error sending message: {ex.Message}");
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SendMessage();
+        }
+    }
+
+    private void ToggleChat()
+    {
+        _expanded = !_expanded;
+    }
+
+    private async Task ScrollToBottom()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("scrollToBottom", messagesDiv);
+        }
+        catch { }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_chatHub is not null)
+        {
+            await _chatHub.SendAsync("LeaveChatRoom", RoomId);
+            await _chatHub.DisposeAsync();
+        }
+    }
+
+    public class ChatMessage
+    {
+   
+        public string Username { get; set; }
+        public string Message { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
+    }
+
+    public class OperationResult<T>
+    {
+        [JsonPropertyName("success")]
+        public bool Success { get; set; }
+
+        [JsonPropertyName("data")]
+        public T? Data { get; set; }
+
+        [JsonPropertyName("message")]
+        public string? Message { get; set; }
+    }
+
+    public class ChatMessageDto
+    {
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [JsonPropertyName("roomId")]
+        public string RoomId { get; set; }
+
+        [JsonPropertyName("userId")]
+        public string UserId { get; set; }
+
+        [JsonPropertyName("username")]
+        public string Username { get; set; }
+
+        [JsonPropertyName("message")]
+        public string Message { get; set; }
+
+        [JsonPropertyName("timestamp")]
+        public DateTimeOffset Timestamp { get; set; }
+    }
+}

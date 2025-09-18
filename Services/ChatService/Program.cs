@@ -7,6 +7,8 @@ using ChatService.Data.Repos;
 using ChatService.Endpoints;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -34,6 +36,10 @@ builder.WebHost.ConfigureKestrel(options =>
     {
         listenOptions.Protocols = HttpProtocols.Http2;
     });
+    options.ListenLocalhost(5269, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1;
+    });
 });
 
 
@@ -50,10 +56,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
-
 app.MapGrpcService<ChatGrpcService>();
-
 //app.MapChatEndpoints();
 
 
