@@ -13,7 +13,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 var httpClient = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
 builder.Services.AddScoped(sp => httpClient);
 
-// Download and load appsettings.json from wwwroot
+
 var configStream = await httpClient.GetStreamAsync("appsettings.json");
 builder.Configuration.AddJsonStream(configStream);
 
